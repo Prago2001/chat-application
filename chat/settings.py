@@ -44,8 +44,10 @@ INSTALLED_APPS = [
     'channels',
     'core',
     'chats',
-    
+    'django_extensions'
 ]
+
+AUTH_USER_MODEL = 'core.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
