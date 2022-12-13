@@ -31,8 +31,11 @@ We assume you have the following installed already:
   ```bash
   python manage.py runscript read_csv
   ```
-  * A users.txt file will get created. Refer to it while logging in.
+  * A 'users.txt' file will get created. Refer to it while logging in. A three letter word is the username in the text file.
   * The password for all users is: `branch12`
   * Finally run the server: `python manage.py runserver`.
   * 'users.txt' contains usernames of customers.
-  * Login of agents: Usernames-> `agent1`,`agent2`, Password -> `branch12`
+  * Login of agents: Usernames-> `agent-1`,`agent-2`, Password -> `branch12`
+  * Open two (private)windows of a browser and type `localhost:8000`
+  * In one login using agents username and in the second browser login using the username mentioned in users.txt.
+  * Go to `chats` tab and start chatting!

@@ -9,7 +9,7 @@ import datetime as dt
 
 
 def get_user_id():
-    with open(file='/home/pratik/CodePractice/branch-messaging-app/chat/scripts/data.csv',mode='+r') as file:
+    with open(file='./scripts/data.csv',mode='+r') as file:
         reader = csv.reader(file,delimiter=",")
         next(reader)
         ids = set()
@@ -61,7 +61,7 @@ def create_chats(agent1,agent2):
 
 
 def create_messages():
-    with open(file='/home/pratik/CodePractice/branch-messaging-app/chat/scripts/data.csv',mode='+r') as file:
+    with open(file='./scripts/data.csv',mode='+r') as file:
         reader = csv.reader(file,delimiter=",")
         next(reader)
         for row in reader:
