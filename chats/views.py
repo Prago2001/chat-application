@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required
 def get_all_chats(request):
-    chats = Chat.objects.all()
+    user = request.user
+    chats = Chat.objects.filter(users__username=user.username)
     return render(request,'chats/display_chats.html',{'chats':chats})
 
 @login_required

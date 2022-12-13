@@ -3,16 +3,19 @@ import string,random
 from core.models import User
 from chats.models import Message,Chat
 from django.contrib.auth.hashers import make_password
-file = open(file='/home/pratik/CodePractice/branch-messaging-app/chat/scripts/data.csv',mode='+r')
+import datetime as dt
+
 
 
 
 def get_user_id():
-    reader = csv.reader(file,delimiter=",")
-    next(reader)
-    ids = set()
-    for row in reader:
-        ids.add(int(row[0]))
+    with open(file='/home/pratik/CodePractice/branch-messaging-app/chat/scripts/data.csv',mode='+r') as file:
+        reader = csv.reader(file,delimiter=",")
+        next(reader)
+        ids = set()
+        for row in reader:
+            ids.add(int(row[0]))
+        print(ids)
     return ids
 
 def generate_user():
@@ -20,7 +23,10 @@ def generate_user():
     users = {}
     for id in ids:
         username = ''.join(random.choices(string.ascii_uppercase,k=3))
+        while username in users:
+            username = ''.join(random.choices(string.ascii_uppercase,k=3))
         users[username] = id
+    print('Usernames created')
     return users
 
 def create_user():
@@ -32,6 +38,7 @@ def create_user():
             user_id=user_id,
         ) for username,user_id in users.items()
     ])
+    print("Users created")
 
 def create_chats(agent1,agent2):
     users = User.objects.filter(is_agent=False)
@@ -47,21 +54,26 @@ def create_chats(agent1,agent2):
         )
         chat.users.add(user,agent1,agent2)
         chat.save()
+    print('Chats created')
 
 
 def create_messages():
-    reader = csv.reader(file,delimiter=",")
-    next(reader)
-    for row in reader:
-        id = int(row[0])
-        user = User.objects.get(user_id=id)
-        chat = Chat.objects.get(name=user.username)
-        msg = Message.objects.create(
-            chat=chat,
-            user=user,
-            content=row[2]
-        )
-        msg.save()
+    with open(file='/home/pratik/CodePractice/branch-messaging-app/chat/scripts/data.csv',mode='+r') as file:
+        reader = csv.reader(file,delimiter=",")
+        next(reader)
+        for row in reader:
+            id = int(row[0])
+            user = User.objects.get(user_id=id)
+            chat = Chat.objects.get(name=user.username)
+            msg = Message.objects.create(
+                chat=chat,
+                user=user,
+                content=row[2],
+                timestamp = dt.datetime.strptime(row[1],'%Y-%m-%d %H:%M:%S')
+            )
+            msg.save()
+    print("Messages created")
+    
 
 
 
@@ -69,8 +81,21 @@ def create_messages():
 
 
 def run():
-    # create_user()
-    # agent_1 = User.objects.get(username='agent-1')
-    # agent_2 = User.objects.get(username='agent-2')
-    # create_chats(agent_1,agent_2)
-    # create_messages()
+    create_user()
+    agent_1 = User.objects.create(
+        username='agent-1',
+        password = make_password('branch12'),
+        user_id=1,
+        is_agent=True
+    )
+    agent_2 = User.objects.create(
+        username='agent-2',
+        password = make_password('branch12'),
+        user_id=2,
+        is_agent=True
+    )
+    agent_1.save()
+    agent_2.save()
+    create_chats(agent_1,agent_2)
+    create_messages()
+        

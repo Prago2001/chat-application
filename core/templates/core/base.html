@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{% block title %}{% endblock %}Djangochat</title>
+        <title>{% block title %}{% endblock %}Chat</title>
 
         <script src="https://cdn.tailwindcss.com"></script>
 
@@ -19,9 +19,13 @@
 
     <body class="bg-teal-600">
         <nav class="flex items-center justify-between px-4 py-6 bg-teal-800">
+            {% if request.user.is_authenticated %}
+                <div class="text-xl text-white">Hello {{ user.username }}</div>
+            {% else %}
             <div>
                 <a href="/" class="text-xl text-white">Chat Application</a>
             </div>
+            {% endif %}
 
             <div class="flex items-center space-x-4">
                 {% if request.user.is_authenticated %}

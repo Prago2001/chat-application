@@ -1,15 +1,22 @@
 {% extends 'core/base.html' %}
 
-{% block title %}{{ chat.name }} | {% endblock %}
 
 {% block content %}
-<div class="p-10 lg:p-20 text-center">
-    <h1 class="text-3xl lg:text-6xl text-white">{{ chat.name }}</h1>
-</div>
+{% if user.is_agent %}
+    <div class="p-10 lg:p-20 text-center">
+        <h1 class="text-3xl lg:text-6xl text-white">Customer Name: {{ chat.name }}</h1>
+    </div>
+{% else %}
+    <div class="p-10 lg:p-20 text-center">
+        <h1 class="text-3xl lg:text-6xl text-white">Talk to Agent</h1>
+    </div>
+{% endif %}
 
 <div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
     <div class="chat-messages space-y-3" id="chat-messages">
-        {% for m in messages %}<b>{{ m.user.username }}</b>: {{ m.content }}<br>{% endfor %}
+        {% for m in messages %}
+            <b>{{ m.user.username }}</b>: {{ m.content }}<br>
+        {% endfor %}
     </div>
 </div>
 
