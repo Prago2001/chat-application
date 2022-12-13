@@ -27,6 +27,9 @@ def generate_user():
             username = ''.join(random.choices(string.ascii_uppercase,k=3))
         users[username] = id
     print('Usernames created')
+    with open("users.txt", 'w') as f:
+        for user_name,user_id in users.items():
+            f.write('%s:%s\n' % (user_name, user_id))
     return users
 
 def create_user():
