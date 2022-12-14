@@ -20,7 +20,7 @@
     <body class="bg-teal-600">
         <nav class="flex items-center justify-between px-4 py-6 bg-teal-800">
             {% if request.user.is_authenticated %}
-                <div class="text-xl text-white">Hello {{ user.username }}</div>
+                <div class="text-xl text-white" id="logged-in-user">Hello {{ user.username }}</div>
             {% else %}
             <div>
                 <a href="/" class="text-xl text-white">Chat Application</a>
